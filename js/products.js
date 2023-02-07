@@ -289,7 +289,7 @@ function deleteProduct(productId, categoryId) {
 
 function resetCategorySelection() {
 	if (menuCategory.value == -1) {
-		menuCategory.value = 1;
+		menuCategory.value = "Uncategorized";
 	}
 }
 

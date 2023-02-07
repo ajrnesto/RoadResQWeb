@@ -12,10 +12,11 @@ const btnSaveCategory = document.querySelector('#btnSaveCategory');
 const etCategoryName = document.querySelector('#etCategoryName');
 const categoryNameValidator = document.querySelectorAll('.category-name-validator');
 const menuCategory = document.querySelector('#menuCategory');
+const menuCategoriesFilter = document.querySelector('#menuCategoriesFilter');
 
 
 window.addEventListener("load", function() {
-	renderCategories();
+	renderCategoriesSelectOptions();
 });
 
 window.manageCategory = manageCategory;
@@ -32,7 +33,7 @@ menuCategory.addEventListener("change", () => {
 	}
 });
 
-function renderCategories() {
+function renderCategoriesSelectOptions() {
 	onSnapshot(collection(db, "categories"), (snapCategories) => {
 		// clear table
 		tbodyCategories.innerHTML = '';
@@ -45,11 +46,14 @@ function renderCategories() {
 		snapCategories.forEach(category => {
 			const categoryName = category.data().categoryName;
 			const products = category.data().products;
-			const option = document.createElement("option");
-			option.innerHTML = categoryName;
-			option.value = category.id;
-			menuCategory.appendChild(option);
 
+			if (categoryName != "Uncategorized") {
+				const option = document.createElement("option");
+				option.innerHTML = categoryName;
+				option.value = category.id;
+				menuCategory.appendChild(option);
+				menuCategoriesFilter.appendChild(option);
+			} 
             renderCategoryTable(
 				category.id,
 				categoryName,
