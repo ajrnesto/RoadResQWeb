@@ -89,25 +89,33 @@
 					<div class="col-7">
 						<button class="btn btn-primary float-end" id="btnAddProduct" onclick="manageProduct(null)" type="button" data-bs-toggle="modal" data-bs-target="#modalManageProduct"><i class="bi bi-plus-lg me-2 text-light" style="font-size: 1rem;"></i>Add New Product</button>
 					</div>
+						
 					<div class="col-12">
-						<form class="col-12 mt-4">
-							<div class="input-group">
-								<label class="input-group-text" for="menuCategoriesFilter">Category</label>
-								<select class="form-select" id="menuCategoriesFilter">
-									<option value="-1">All</option>
-									<option value="Uncategorized">Uncategorized</option>
-								</select>
-								<!--label for="menuCategoriesFilter" class="input-group-text">Category</label>
-								<input class="form-control" list="datalistCategories" id="menuCategoriesFilter" placeholder="Filter by category...">
-									<datalist id="datalistCategories">
-										<option value="Uncategorized">
-									</datalist-->
-								<input id="etSearchProduct" type="text" class="form-control" placeholder="Search product by name..." aria-label="Search product by name..." aria-describedby="btnSearch">
-								<button class="btn btn-primary search-button" type="button" id="btnSearchProduct">
-									<i class="fi fi-br-search text-light mx-2" style="font-size: 0.8rem;"></i>
-								</button>
-							</div>
-						</form>
+						<div class="row">
+							<form class="col-12 col-lg-4 mt-4">
+								<div class="input-group">
+									<label class="input-group-text" for="menuCategoriesFilter">Category</label>
+									<select class="form-select" id="menuCategoriesFilter">
+										<option value="-1">All</option>
+										<option value="Uncategorized">Uncategorized</option>
+									</select>
+									<!--label for="menuCategoriesFilter" class="input-group-text">Category</label>
+									<input class="form-control" list="datalistCategories" id="menuCategoriesFilter" placeholder="Filter by category...">
+										<datalist id="datalistCategories">
+											<option value="Uncategorized">
+										</datalist-->
+								</div>
+							</form>
+							
+							<form class="col-12 col-lg-8 mt-4">
+								<div class="input-group">
+									<input id="etSearchProduct" type="text" class="form-control" placeholder="Search product by name..." aria-label="Search product by name..." aria-describedby="btnSearch">
+									<button class="btn btn-primary search-button" type="button" id="btnSearchProduct">
+										<i class="fi fi-br-search text-light mx-2" style="font-size: 0.8rem;"></i>
+									</button>
+								</div>
+							</form>
+						</div>
 					</div>
 
 					<table class="table align-middle mt-3">
