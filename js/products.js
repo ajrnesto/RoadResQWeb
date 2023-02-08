@@ -1,5 +1,5 @@
 import { db, storage } from '../js/firebase.js';
-import { doc, collection, addDoc, setDoc, getDoc, deleteDoc, updateDoc, increment, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
+import { doc, collection, addDoc, setDoc, getDoc, deleteDoc, updateDoc, increment, query, where, orderBy, startAt, endAt, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
 import { ref, uploadBytes, getDownloadURL, deleteObject } from "../node_modules/firebase/firebase-storage.js";
 import { showModal, hideModal, resetValidation, invalidate } from '../js/utils.js';
 
@@ -19,6 +19,11 @@ const imgProduct = document.querySelector("#imgProduct")
 const btnUploadImage = document.querySelector("#btnUploadImage")
 let selectedProductImage = null;
 let productThumbnailWasChanged = false;
+
+const etSearchProduct = document.querySelector('#etSearchProduct');
+const menuCategoriesFilter = document.querySelector('#menuCategoriesFilter');
+const btnSearchProduct = document.querySelector('#btnSearchProduct');
+let unsubProductsListener = null;
 
 // delete modal
 const tvConfirmDeleteMessage = document.querySelector('#tvConfirmDeleteMessage');
@@ -44,8 +49,40 @@ btnUploadImage.addEventListener("change", () => {
 	productThumbnailWasChanged = true;
 });
 
+btnSearchProduct.addEventListener("click", function() {
+	console.log("Searching for products...");
+
+	if (unsubProductsListener != null) {
+		unsubProductsListener();
+	}
+
+	renderProducts();
+});
+
 function renderProducts() {
-	onSnapshot(collection(db, "products"), (snapProducts) => {
+	const searchKey = etSearchProduct.value.toUpperCase();
+	const selectedCategory = menuCategoriesFilter.value;
+
+	let qryProducts = null;
+
+	if (selectedCategory == -1) {
+		if (searchKey == "") {
+			qryProducts = query(collection(db, "products"));
+		}
+		else {
+			qryProducts = query(collection(db, "products"), orderBy("productNameAllCaps"), startAt(searchKey), endAt(searchKey+'\uf8ff'));
+		}
+	}
+	else {
+		if (searchKey == "") {
+			qryProducts = query(collection(db, "products"), where("categoryId", "==", selectedCategory));
+		}
+		else {
+			qryProducts = query(collection(db, "products"), orderBy("productNameAllCaps"), startAt(searchKey), endAt(searchKey+'\uf8ff'), where("categoryId", "==", selectedCategory));
+		}
+	}
+	
+	unsubProductsListener = onSnapshot(qryProducts, (snapProducts) => {
 		// clear table
 		tbodyProducts.innerHTML = '';
 
@@ -146,6 +183,8 @@ function manageProduct(id, productName, productDetails, categoryId, price, stock
 		etStock.value = Number(stock);
 		menuCategory.value = categoryId;
 
+		console.log("MENU CATEGORY ID IS: "+categoryId);
+
 		if (oldThumbnail == null) {
 			imgProduct.src = "https://via.placeholder.com/150?text=Image";
 		}
@@ -159,6 +198,7 @@ function manageProduct(id, productName, productDetails, categoryId, price, stock
 		imgProduct.src = "https://via.placeholder.com/150?text=Image";
 		tvManageProductTitle.textContent = "Add Product";
 		btnSaveProduct.textContent = "Add Product";
+		menuCategory.value = "Uncategorized";
 	}
 
 	btnSaveProduct.onclick = function() {
@@ -220,6 +260,7 @@ function uploadProductData(productId, productName, productDetails, price, stock,
 	if (NEW_PRODUCT) {
 		addDoc(collection(db, "products"), {
 			productName: productName,
+			productNameAllCaps: productName.toUpperCase(),
 			productDetails: productDetails,
 			price: parseFloat(price),
 			stock: parseInt(stock),
@@ -235,6 +276,7 @@ function uploadProductData(productId, productName, productDetails, price, stock,
 			deleteObject(ref(storage, 'products/'+oldThumbnail)).then(() => {
 				setDoc(doc(db, "products", productId), {
 					productName: productName,
+					productNameAllCaps: productName.toUpperCase(),
 					productDetails: productDetails,
 					price: parseFloat(price),
 					stock: parseInt(stock),
@@ -251,6 +293,7 @@ function uploadProductData(productId, productName, productDetails, price, stock,
 		else if (!productThumbnailWasChanged) {
 			updateDoc(doc(db, "products", productId), {
 				productName: productName,
+				productNameAllCaps: productName.toUpperCase(),
 				productDetails: productDetails,
 				price: parseFloat(price),
 				stock: parseInt(stock),

@@ -1,5 +1,5 @@
 import { db, storage } from '../js/firebase.js';
-import { doc, collection, addDoc, updateDoc, deleteDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
+import { doc, collection, addDoc, updateDoc, deleteDoc, query, orderBy, startAt, endAt, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
 import { showModal, hideModal, resetValidation, invalidate } from '../js/utils.js';
 
 // table
@@ -14,6 +14,10 @@ const categoryNameValidator = document.querySelectorAll('.category-name-validato
 const menuCategory = document.querySelector('#menuCategory');
 const menuCategoriesFilter = document.querySelector('#menuCategoriesFilter');
 
+const etSearchCategory = document.querySelector('#etSearchCategory');
+const btnSearchCategory = document.querySelector('#btnSearchCategory');
+
+let unsubCategoryListener = null;
 
 window.addEventListener("load", function() {
 	renderCategoriesSelectOptions();
@@ -21,6 +25,16 @@ window.addEventListener("load", function() {
 
 window.manageCategory = manageCategory;
 window.confirmDeleteCategory = confirmDeleteCategory;
+
+btnSearchCategory.addEventListener("click", function() {
+	console.log("Searching for categories...");
+
+	if (unsubCategoryListener != null) {
+		unsubCategoryListener();
+	}
+
+	renderCategoriesSelectOptions();
+});
 
 menuCategory.addEventListener("change", () => {
 	const ADD_NEW_CATEGORY = -1;
@@ -34,7 +48,17 @@ menuCategory.addEventListener("change", () => {
 });
 
 function renderCategoriesSelectOptions() {
-	onSnapshot(collection(db, "categories"), (snapCategories) => {
+	const searchKey = etSearchCategory.value.toUpperCase();
+
+	let qryCategories = null;
+	if (searchKey == "") {
+		qryCategories = query(collection(db, "categories"));
+	}
+	else {
+		qryCategories = query(collection(db, "categories"), orderBy("categoryNameAllCaps"), startAt(searchKey), endAt(searchKey+'\uf8ff'));
+	}
+	
+	unsubCategoryListener = onSnapshot(qryCategories, (snapCategories) => {
 		// clear table
 		tbodyCategories.innerHTML = '';
 
@@ -48,12 +72,15 @@ function renderCategoriesSelectOptions() {
 			const products = category.data().products;
 
 			if (categoryName != "Uncategorized") {
-				const option = document.createElement("option");
-				option.innerHTML = categoryName;
-				option.value = category.id;
-				menuCategory.appendChild(option);
-				menuCategoriesFilter.appendChild(option);
-			} 
+				const optionForMenuCategoriesFilter = document.createElement("option");
+				optionForMenuCategoriesFilter.innerHTML = categoryName;
+				optionForMenuCategoriesFilter.value = category.id;
+				menuCategoriesFilter.add(optionForMenuCategoriesFilter);
+				const optionForMenuCategory = document.createElement("option");
+				optionForMenuCategory.innerHTML = categoryName;
+				optionForMenuCategory.value = category.id;
+				menuCategory.append(optionForMenuCategory);
+			}
             renderCategoryTable(
 				category.id,
 				categoryName,
@@ -135,12 +162,14 @@ function saveCategory(categoryId) {
 	if (categoryId == null) {
 		addDoc(collection(db, "categories"), {
 			categoryName: categoryName,
+			categoryNameAllCaps: categoryName.toUpperCase(),
 			products: parseInt(0)
 		});
 	}
 	else {
 		updateDoc(doc(db, "categories", categoryId), {
-			categoryName: categoryName
+			categoryName: categoryName,
+			categoryNameAllCaps: categoryName.toUpperCase(),
 		});
 	}
 
