@@ -8,6 +8,10 @@ const btnTrackOrders = document.querySelector('#btnTrackOrders');
 const btnCart = document.querySelector('#btnCart');
 const btnAvatar = document.querySelector('#btnAvatar');
 const btnLoginOrSignup = document.querySelector('#btnLoginOrSignup');
+const btnTrackOrdersListItem = document.querySelector('.nav-btn-track-orders');
+const btnCartListItem = document.querySelector('.nav-btn-cart');
+const btnAvatarListItem = document.querySelector('.nav-btn-avatar');
+const btnLoginOrSignupListItem = document.querySelector('.nav-btn-login-or-signup');
 const tvEmail = document.querySelector('#tvEmail');
 const btnLogout = document.querySelector('#btnLogout');
 
@@ -28,26 +32,22 @@ onAuthStateChanged(auth, user => {
 				window.location = "../admin/dashboard.html";
 			}
 			else if (userType == CUSTOMER) {
-				showElement(btnTrackOrders);
-				showElement(btnCart);
-				showElement(btnAvatar);
-				hideElement(btnLoginOrSignup);
+				showElement(btnTrackOrdersListItem);
+				showElement(btnCartListItem);
+				showElement(btnAvatarListItem);
+				hideElement(btnLoginOrSignupListItem);
 				generateAvatar(user.email.toUpperCase());
 				tvEmail.textContent = user.email;
 			}
 		});
 	}
 	else {
-		hideElement(btnTrackOrders);
-		hideElement(btnCart);
-		hideElement(btnAvatar);
-		showElement(btnLoginOrSignup);
+		hideElement(btnTrackOrdersListItem);
+		hideElement(btnCartListItem);
+		hideElement(btnAvatarListItem);
+		showElement(btnLoginOrSignupListItem);
 	}
 });
-
-async function getUserType(uid) {
-	
-}
 
 btnLogout.addEventListener("click", () => {
 	signOut(auth);
