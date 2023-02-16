@@ -111,3 +111,29 @@ export function generateAvatar(firstName) {
 		element.style.borderRadius = "50%";
 	});
 }
+
+export function parseButtonAction(status, deliveryOption) {
+	if (status == "Pending") {
+		return "Prepare Order";
+	}
+	else if (status == "Preparing") {
+		if (deliveryOption == "Delivery") {
+			return "Deliver Item";
+		}
+		else if (deliveryOption == "Pick-up") {
+			return "Mark as Ready for Pick-up";
+		}
+	}
+	else if (status == "Ready for Pick-up") {
+		return "Mark as Picked-up";
+	}
+	else if (status == "In Transit") {
+		return "Mark as Delivered";
+	}
+	else if (status == "Delivered/Picked-up") {
+		return -1;
+	}
+}
+// export function parseDate(millis) {
+// 	const seconds = millis
+// }

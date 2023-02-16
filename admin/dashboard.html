@@ -8,14 +8,12 @@
         <title>Dashboard</title>
         <link rel="stylesheet" href="/css/main.min.css">
         <link rel="stylesheet" href="/css/global.css">
-		<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
-		<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
         <script type="module" src="/js/navbar-admin.js"></script>
         <script type="module" src="/js/dashboard.js"></script>
 </head>
 
 <body class="bg-light">
-	<nav class="navbar navbar-expand-md navbar-light py-0" style="background-color: white;">
+	<nav class="navbar sticky-top navbar-expand-md navbar-light py-0" style="background-color: white;">
 		<div class="container-fluid justify-content-center">
 		    <a class="navbar-brand col-9 col-md-2 ms-0 ms-md-4" href="#"><img src="../images/logo.png" alt="J&J" width="80"/></a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +45,62 @@
 		    </div>
 		</div>
 	</nav>
+
+	<div class="container px-4 pt-4 pb-2">
+		<div id="cardOrders" class="row rounded bg-white p-4 justify-content-center" role="button">
+			<h3 class="text-center">Orders</h3>
+			<hr class="mt-2"/>
+			<div class="row">
+				<h6 id="tvPending" class="col-2 display-5 text-dark text-center">0</h3>
+				<h6 id="tvPreparing" class="col-2 display-5 text-dark text-center">0</h4>
+				<h6 id="tvReadyForPickup" class="col-3 display-5 text-dark text-center">0</h4>
+				<h6 id="tvInTransit" class="col-2 display-5 text-dark text-center">0</h3>
+				<h6 id="tvCompleted" class="col-3 display-5 text-dark text-center">0</h3>
+			</div>
+			<div class="row">
+				<p class="col-2 text-dark text-center">Pending</p>
+				<p class="col-2 text-dark text-center">Preparing</p>
+				<p class="col-3 text-dark text-center">Ready for Pick-up</p>
+				<p class="col-2 text-dark text-center">In Transit</p>
+				<p class="col-3 text-dark text-center">Delivered/Picked-up</p>
+			</div>
+			<hr class="mt-2"/>
+		</div>
+	</div>
+
+	<div class="container px-2 pb-4">
+		<div class="row">
+			<div class="col-12 col-sm-5 container p-4">
+				<div class="row rounded bg-white p-4 justify-content-center">
+					<h3 class="text-center">Revenue</h3>
+					<hr class="mt-2"/>
+					<div class="row">
+						<h6 id="tvRevenue" class="col-12 display-6 text-dark text-center">₱0.00</h3>
+					</div>
+					<div class="row">
+						<p class="col-12 text-dark text-center">This Month</p>
+					</div>
+					<hr class="mt-2"/>
+				</div>
+			</div>
+		
+			<div class="col-12 col-sm-7 container p-4">
+				<div id="cardProducts" class="row rounded bg-white p-4 justify-content-center" role="button">
+					<h3 class="text-center">Products</h3>
+					<hr class="mt-2"/>
+					<div class="row">
+						<h6 id="tvCategories" class="col-6 display-5 text-dark text-center">0</h3>
+						<h6 id="tvProducts" class="col-6 display-5 text-dark text-center">0</h3>
+					</div>
+					<div class="row">
+						<p class="col-6 text-dark text-center">Categories</p>
+						<p class="col-6 text-dark text-center">Products</p>
+					</div>
+					<hr class="mt-2"/>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>

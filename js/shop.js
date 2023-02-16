@@ -159,7 +159,21 @@ function queryProducts() {
 
 function viewProduct(productId, productName, productDetails, categoryId, price, stock, thumbnail) {
 	showModal('#modalViewProduct');
-	etQuantity.value = 1;
+
+	if (stock < 1) {
+		etQuantity.value = 0;
+		btnDecrement.classList.toggle("disabled", true);
+		etQuantity.classList.toggle("disabled", true);
+		btnIncrement.classList.toggle("disabled", true);
+		btnAddToCart.classList.toggle("disabled", true);
+	}
+	else {
+		etQuantity.value = 1;
+		btnDecrement.classList.toggle("disabled", false);
+		etQuantity.classList.toggle("disabled", false);
+		btnIncrement.classList.toggle("disabled", false);
+		btnAddToCart.classList.toggle("disabled", false);
+	}
 	
 	if (thumbnail == null){
 		imgViewProductThumbnail.src = "https://via.placeholder.com/150?text=Image";
@@ -228,6 +242,13 @@ function viewProduct(productId, productName, productDetails, categoryId, price, 
 					quantity: quantity
 				});
 			}
-		})
+
+			const product = doc(db, "products", productId);
+			updateDoc(product, {
+				stock: increment(-quantity)
+			})
+		});
+
+		console.log("code reached here");
 	}
 }
