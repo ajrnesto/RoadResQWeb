@@ -1,17 +1,17 @@
 // imports
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js';
 import { getAuth } from '../node_modules/firebase/firebase-auth.js';
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
 import { getStorage } from "../node_modules/firebase/firebase-storage.js";
 
 export const app = initializeApp({
-	apiKey: "AIzaSyBHj7ai9DnMGMO8jHvchLUxnbmrVST8WhI",
-	authDomain: "j-and-j-motorparts.firebaseapp.com",
-	projectId: "j-and-j-motorparts",
-	storageBucket: "j-and-j-motorparts.appspot.com",
-	messagingSenderId: "497755068532",
-	appId: "1:497755068532:web:6fe41ea958a74f85281921",
-	measurementId: "G-P1S76JTRLM"
+  apiKey: "AIzaSyCWJnK_1qUC3SexC0qPIYiflpAm3lgk8_U",
+  authDomain: "road-resq.firebaseapp.com",
+  projectId: "road-resq",
+  storageBucket: "road-resq.appspot.com",
+  messagingSenderId: "294167437924",
+  appId: "1:294167437924:web:946e3cd9c59bd3dbe47571",
+  measurementId: "G-L1ZWV91T3F"
 });
 
 export const auth = getAuth(app);

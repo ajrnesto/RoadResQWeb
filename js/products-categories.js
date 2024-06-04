@@ -1,5 +1,5 @@
 import { db, storage } from '../js/firebase.js';
-import { doc, collection, addDoc, updateDoc, deleteDoc, query, orderBy, startAt, endAt, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
+import { doc, collection, addDoc, updateDoc, deleteDoc, query, orderBy, startAt, endAt, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
 import { showModal, hideModal, resetValidation, invalidate } from '../js/utils.js';
 
 // table
@@ -62,7 +62,7 @@ function renderCategoriesSelectOptions() {
 		// clear table
 		tbodyCategories.innerHTML = '';
 
-		// clear category select options
+		// clear category select optionsz
 		while (menuCategory.length > 2) {
 			menuCategory.remove(menuCategory.length - 1);
 		}
@@ -179,6 +179,7 @@ function saveCategory(categoryId) {
 
 function confirmDeleteCategory(categoryId, categoryName) {
 	tvConfirmDeleteMessage.innerHTML = "Delete the category \"" + categoryName + "\"?\n<br>This will mark all items under this category as uncategorized.";
+	btnDelete.textContent = "Delete Category";
 	showModal('#modalConfirmDelete');
 
 	btnDelete.onclick = function() {

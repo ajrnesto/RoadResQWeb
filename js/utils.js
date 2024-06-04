@@ -1,36 +1,68 @@
 import { db } from '../js/firebase.js';
-import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js';
+import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js';
+
+export function dateFormatter(date) {
+	const options = {
+		month: "short",
+		day: 'numeric',
+		year: 'numeric',
+		// hour: 'numeric',
+		// minute: '2-digit'
+	}
+
+	const d = new Date(date);
+
+	return d.toLocaleDateString("en-US", options);
+}
 
 /* authentication */
-export function checkUserTypeThenRedirect(user) {
+export function authenticate(user) {
 	if (!user) {
+		window.location = "../login.html";
 		return;
 	}
 
-	const docRef = doc(db, "users", user.uid);
-	getDoc(docRef).then(userSnap => {
-		const userType = userSnap.data().userType;
-		if (userType == 0) {
-			window.location = "../shop.html";
-		}
-		else if (userType == 1) {
-			window.location = "../admin/dashboard.html";
-		}
-	});
-}
-
-export function checkAuthThenRedirect(user) {
-	if (!user) {
-		window.location = "../shop.html";
+	if (!user.email.includes("admin")) {
+		window.location = "../login.html";
 		return;
 	}
 
-	checkUserTypeThenRedirect(user);
+	window.location = "../services.html";
 }
+
+// export function checkUserTypeThenRedirect(user) {
+// 	if (!user) {
+// 		window.location = "../shop.html";
+// 		return;
+// 	}
+
+// 	const docRef = doc(db, "users", user.uid);
+// 	getDoc(docRef).then(userSnap => {
+// 		const userType = userSnap.data().userType;
+// 		if (userType == 0) {
+// 			window.location = "../shop.html";
+// 		}
+// 		else if (userType == 1) {
+// 			window.location = "../dashboard.html";
+// 		}
+// 		else if (userType == 2 || userType == 3) {
+// 			window.location = "../appointments.html";
+// 		}
+// 	});
+// }
+
+// export function checkAuthThenRedirect(user) {
+// 	if (!user) {
+// 		window.location = "../shop.html";
+// 		return;
+// 	}
+
+// 	checkUserTypeThenRedirect(user);
+// }
 
 export function blockNonAdmins(user) {
 	if (!user) {
-		window.location = "../shop.html";
+		window.location = "../login.html";
 		return;
 	}
 
@@ -38,10 +70,25 @@ export function blockNonAdmins(user) {
 	getDoc(docRef).then(userSnap => {
 		const userType = userSnap.data().userType;
 		if (userType != 1) {
-			window.location = "../shop.html";
+			window.location = "../login.html";
 		}
 	});
 }
+
+// export function blockEmployees(user) {
+// 	if (!user) {
+// 		window.location = "../shop.html";
+// 		return;
+// 	}
+
+// 	const docRef = doc(db, "users", user.uid);
+// 	getDoc(docRef).then(userSnap => {
+// 		const userType = userSnap.data().userType;
+// 		if (userType == 2 || userType == 3) {
+// 			window.location = "../appointments.html";
+// 		}
+// 	});
+// }
 
 /* ui */
 export function showModal(modalId) {
@@ -89,8 +136,8 @@ export function generateAvatar(firstName) {
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
-    const foregroundColor = "white";
-    const backgroundColor = '#2980ba';
+    const foregroundColor = "#A22C29";
+    const backgroundColor = '#ffffff';
 
     canvas.width = 35;
     canvas.height = 35;
@@ -116,7 +163,7 @@ export function parseButtonAction(status, deliveryOption) {
 	if (status == "Pending") {
 		return "Prepare Order";
 	}
-	else if (status == "Preparing") {
+	else if (status == "InService") {
 		if (deliveryOption == "Delivery") {
 			return "Deliver Item";
 		}
@@ -130,10 +177,49 @@ export function parseButtonAction(status, deliveryOption) {
 	else if (status == "In Transit") {
 		return "Mark as Delivered";
 	}
-	else if (status == "Delivered/Picked-up") {
+	else if (status == "Delivered/Picked-up" || status == "Failed Delivery") {
+		return -1;
+	}
+}
+
+export function parseOrderButtonAction(status, deliveryOption) {
+	if (status == "Pending") {
+		return "Prepare Order";
+	}
+	else if (status == "Preparing") {
+		if (deliveryOption == "Delivery") {
+			return "Deliver Item";
+		}
+		else if (deliveryOption == "Pick-up") {
+			return "Mark as Ready for Pick-up";
+		}
+	}
+	else if (status == "Ready for Pick-up") {
+		return "Mark as Completed";
+	}
+	else if (status == "In Transit") {
+		return "Mark as Delivered";
+	}
+	else if (status == "Delivered/Picked-up" || status == "Failed Delivery") {
 		return -1;
 	}
 }
 // export function parseDate(millis) {
 // 	const seconds = millis
 // }
+
+export function capitalizeFirstLetter(string) 
+{
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+export function titleCase(str) {
+	var splitStr = str.toLowerCase().split(' ');
+	for (var i = 0; i < splitStr.length; i++) {
+			// You do not need to check if i is larger than splitStr length, as your for does that for you
+			// Assign it back to the array
+			splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+	}
+	// Directly return the joined string
+	return splitStr.join(' '); 
+}

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rescue</title>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<link rel="stylesheet" href="/css/main.min.css">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-straight/css/uicons-regular-straight.css'>
+	<link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+	<script type="module" src="/js/navbar-admin.js"></script>
+	<script type="module" src="/js/rescue.js"></script>
+</head>
+
+<body class="bg-light">
+	<nav class="navbar sticky-top navbar-expand-md bg-primary shadow py-0">
+		<div class="container-fluid justify-content-center">
+				<div class="row">
+					<a class="navbar-brand col-9 col-md-2 ms-0 ms-md-4 me-2" href="#"><img src="/images/logo.png" alt="J&J" height="25"/></a>
+					<h1 class="text-light col-auto my-auto" style="font-family: Tilt Neon; font-size: 1.4rem; -webkit-user-select: none; -ms-user-select: none; user-select: none;">RoadResQ</h1>
+				</div>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse col-9 col-md-10 navbar-collapse justify-content-end" id="navbarSupportedContent">
+				<div class="col-12 col-md-6"></div>
+				<ul class="navbar-nav nav-underline col-12 col-md-auto justify-content-center mb-2 mb-lg-0">
+					<li class="nav-item col-sm-auto px-3 text-center py-2">
+						<a class="nav-link" href="dashboard.html">Dashboard</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link active" aria-current="page" href="#">Rescue</a>
+					</li>
+					<li class="nav-item nav-btn-track-appointments col-sm-auto px-2 text-center py-2 bg-tertiary rounded-top-3">
+						<a class="nav-link" href="services.html">Manage Services</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="appointments.html">Appointments</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="inventory.html">Manage Inventory</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="orders.html">Orders</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="users.html">Users</a>
+					</li>
+					<li class="nav-item nav-btn-avatar col-sm-auto px-3 text-center py-auto dropdown">
+						<a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img class="user-avatar my-0 py-0" alt="">
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><a class="dropdown-item text-center dropdown-text-email disabled text-primary" href="#">Email Address</a></li>
+							<li><a class="dropdown-item text-center text-danger" href="#" id="btnLogout">Log out</a></li>
+						</ul>
+					</li>
+				</ul>
+		    </div>
+		</div>
+	</nav>
+
+	<div class="row pt-3 px-5">
+		<form class="col-12 col-sm-6 mt-4 mx-auto">
+			<div class="input-group w-100">
+				<label class="input-group-text d-none" for="menuFilter">Filter By</label>
+				<select class="form-select d-none" id="menuFilter">
+					<option value="User ID">User ID</option>
+					<option value="User Name">User Name</option>
+				</select>
+				<input id="etSearchId" type="text" class="form-control w-50" placeholder="Enter User ID" aria-label="Enter User ID">
+				<input id="etFirstName" type="text" class="form-control w-25 d-none rounded-start-0" placeholder="First Name" aria-label="First Name">
+				<input id="etLastName" type="text" class="form-control w-25 d-none" placeholder="Last Name" aria-label="Last Name">
+				<button class="btn btn-primary search-button" type="button" id="btnFilter">
+					<i class="fi fi-br-search text-light mx-2" style="font-size: 0.8rem;"></i>
+				</button>
+			</div>
+		</form>
+	</div>v
+
+	<div id="tabsAppointments" class="text-center mt-3">
+		<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+			<input type="radio" class="btn-check" name="btnradio" id="btnPending" autocomplete="off" checked>
+			<label id="btnPendingLabel" class="btn btn-outline-primary px-4" for="btnPending">Pending</label>
+		  
+			<input type="radio" class="btn-check" name="btnradio" id="btnInService" autocomplete="off">
+			<label id="btnInServiceLabel" class="btn btn-outline-primary px-4" for="btnInService">In Service</label>
+		  
+			<input type="radio" class="btn-check" name="btnradio" id="btnCompleted" autocomplete="off">
+			<label id="btnCompletedLabel" class="btn btn-outline-primary px-4" for="btnCompleted">Completed</label>
+	</div>
+
+	<div id="appointmentsContainer">
+		<!-- card container ->
+		<div-- class="col-10 col-md-8 col-lg-6 container col p-4 pb-0 justify-content-center">
+			<!- card ->
+			<div class="rounded bg-white col-12 text-center p-4">
+				<!- card header ->
+				<div class="row">
+					<!- card header left ->
+					<div class="col-6">
+						<!- full name ->
+						<h6 class="col text-primary text-start">Juan Tamad</h6>
+						<!- vehicle brand and model ->
+						<p class="col text-dark text-start fs-6 my-0">Suzuki Raider</p>
+						<!- service location ->
+						<p class="col text-dark text-start fs-6">Street, Purok, Barangay, Municipality</p>
+					</div>
+					<!- card header right ->
+					<div class="col-6">
+						<!- schedule ->
+						<h6 class="col fw-medium text-end text-dark fs-6">Nov 10, 2023 12:20 PM</h6>
+						<!- status ->
+						<p class="col fw-medium text-end text-danger fs-6">Status: Pending</p>
+					</div>
+				</div>
+				<!- card body ->
+				<div class="col">
+					<!- service type->
+					<h6 class="col text-primary text-start">Tire Replacement</h6>
+					<!- description ->
+					<p class="text-dark text-start col mt-2">Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate non, quaerat obcaecati a id dolore expedita distinctio rerum magnam.</p>
+					<!- card body footer ->
+					<div class="col text-end align-self-end">
+						<!- action button ->
+						<button class="btn btn-primary">Start Servicing Now</button>
+					</div>
+				</div>
+			</div>
+		</div-->
+	</div>
+
+	
+	
+	<div id="modalChat" class="modal fade" tabindex="-1" aria-labelledby="tvChatTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+			<div id="divModalContent" class="modal-content">
+				<div class="modal-header">
+					<h1 id="tvChatTitle" class="col-6 modal-title fs-5 text-start">Chat</h1>
+					<button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div id="divModalBody" class="modal-body vh-100 col-12">
+					<div id="divChatWrapper" class="col-12">
+						<div id="divChatContainer" class="col-12">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="input-group mb-3">
+						<textarea id="etChatBox" type="text" class="form-control me-3 rounded" placeholder="Write a message..." aria-label="Write a message..."></textarea>
+						<div>
+							<button id="btnSend" class="btn btn-primary rounded" type="button"><i class="bi bi-send-fill text-white fs-6"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="modalMap" class="modal fade" tabindex="-1" aria-labelledby="tvModalMapTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 id="tvModalMapTitle" class="modal-title fs-5 text-danger">Location</h1>
+					<button id="btnCloseModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="map" class="google-map"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+		({key: "AIzaSyDi67EqoPXOjXwKYW2Q-Ehc2Mif_cMGLKM", v: "weekly"});</script>
+	<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

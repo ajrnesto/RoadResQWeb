@@ -1,17 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tilt+Neon&display=swap');
 @import url('https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css');
 
 /* custom variables go here */
 
 // color theming
-$primary: #2980ba;
-//$secondary: #68A357;
-$secondary: #2980ba;
-$light: #f7f7f7;
-$dark: #5a5a5a;
-$danger: #e64c3c;
-$info: #2980ba;
-$success: #32965D;
+$primary: #A22C29;
+//$secondary: #8ECDDD;
+$secondary: #A22C29;
+$tertiary: #6D6E60;
+$light: #FFF2EC;
+$dark: #2C302E;
+$danger: #A22C29;
+$info: #41658A;
+$success: #4F5D2F;
 
 // icons
 i {
@@ -20,24 +21,21 @@ i {
 }
 
 // font theming
-$font-family-sans-serif: "Open Sans";
-$headings-font-family: "Nunito";
+$font-family-sans-serif: "Raleway";
+$headings-font-family: "Tilt Neon";
 $headings-font-weight: 700;
 $headings-color: $primary;
 
 // navbar 
 $nav-pills-link-active-bg: $primary;
 
-.nav-link.active{
+.nav-link{
     color: white !important;
 }
 
 // button theming
 .btn-primary {
 	color: white !important;
-}
-.btn-outline-primary:hover, .btn-outline-danger:hover, .btn-outline-dark:hover {
-    color: white !important;
 }
 
 // form theming

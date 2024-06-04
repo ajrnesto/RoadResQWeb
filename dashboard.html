@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard</title>
+		<script type="module" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+        <link rel="stylesheet" href="/css/main.min.css">
+        <link rel="stylesheet" href="/css/global.css">
+        <script type="module" src="/js/navbar-admin.js"></script>
+        <script type="module" src="/js/dashboard.js"></script>
+</head>
+
+<body class="bg-light">
+	<nav class="navbar sticky-top navbar-expand-md bg-primary shadow py-0">
+		<div class="container-fluid justify-content-center">
+				<div class="row">
+					<a class="navbar-brand col-9 col-md-2 ms-0 ms-md-4 me-2" href="#"><img src="/images/logo.png" alt="J&J" height="25"/></a>
+					<h1 class="text-light col-auto my-auto" style="font-family: Tilt Neon; font-size: 1.4rem; -webkit-user-select: none; -ms-user-select: none; user-select: none;">RoadResQ</h1>
+				</div>
+		    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+		    </button>
+		    <div class="collapse col-9 col-md-10 navbar-collapse justify-content-end" id="navbarSupportedContent">
+				<div class="col-12 col-md-6"></div>
+				<ul class="navbar-nav nav-underline col-12 col-md-auto justify-content-center mb-2 mb-lg-0">
+					<!--li class="nav-item col-sm-auto px-3 text-center py-2">
+						<a class="nav-link" href="dashboard.html">Dashboard</a>
+					</li-->
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="rescue.html">Rescue</a>
+					</li>
+					<li class="nav-item nav-btn-track-appointments col-sm-auto px-2 text-center py-2 bg-tertiary rounded-top-3">
+						<a class="nav-link" href="services.html">Manage Services</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="appointments.html">Appointments</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="inventory.html">Manage Inventory</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="orders.html">Orders</a>
+					</li>
+					<li class="nav-item nav-btn-cart col-sm-auto px-2 text-center text-white py-2">
+						<a class="nav-link" href="users.html">Users</a>
+					</li>
+					<li class="nav-item nav-btn-avatar col-sm-auto px-3 text-center py-auto dropdown">
+						<a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							<img class="user-avatar my-0 py-0" alt="">
+						</a>
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li><a class="dropdown-item text-center dropdown-text-email disabled text-primary" href="#">Email Address</a></li>
+							<li><a class="dropdown-item text-center text-danger" href="#" id="btnLogout">Log out</a></li>
+						</ul>
+					</li>
+				</ul>
+		    </div>
+		</div>
+	</nav>
+
+	<div class="row w-100">
+		<div class="col-4">
+			<h3 class="text-start mt-4 ps-3">Emergency Rescue</h3>
+			<div id="cardRescueRequests" class="row col-12 container ps-5" role="button">
+				<div class="row col-12 rounded bg-white p-4 justify-content-center">
+					<h5 class="text-start">This Month</h5>
+					<p id="tvEmptyRescueRequestsThisMonth" class="d-none text-center mb-0 pb-0">No data to display</p>
+					<div id="divRescueRequestsThisMonth" class="d-none col-12 text-center">
+						<canvas id="chartRescueRequestsThisMonth"></canvas>
+					</div>
+				</div>
+				
+				<div class="row col-12 rounded bg-white p-4 justify-content-center">
+					<h5 class="text-start">All Time</h5>
+					<p id="tvEmptyRescueRequestsAllTime" class="d-none text-center mb-0 pb-0">No data to display</p>
+					<div id="divRescueRequestsAllTime" class="d-none col-12 text-center">
+						<canvas id="chartRescueRequestsAllTime"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-4">
+			<h3 class="text-start mt-4">Shop</h3>
+			<div id="cardOrders" class="col-12 container px-2" role="button">
+				<div class="row rounded bg-white p-4 justify-content-center">
+					<h5 class="text-start">Orders</h5>
+					<hr/>
+						<div class="row">
+							<h6 id="tvPendingOrders" class="col-3 display-5 text-dark text-center">0</h3>
+							<h6 id="tvPreparingOrders" class="col-3 display-5 text-dark text-center">0</h3>
+							<h6 id="tvReadyForPickupOrders" class="col-3 display-5 text-dark text-center">0</h3>
+							<h6 id="tvCompletedOrders" class="col-3 display-5 text-dark text-center">0</h3>
+						</div>
+						<div class="row">
+							<p class="col-3 text-dark text-center" style="font-size: smaller">Pending</p>
+							<p class="col-3 text-dark text-center" style="font-size: smaller">Preparing</p>
+							<p class="col-3 text-dark text-center" style="font-size: smaller">Ready For Pickup</p>
+							<p class="col-3 text-dark text-center" style="font-size: smaller">Completed</p>
+						</div>
+						<hr/>
+						<div class="row">
+							<h5 class="text-start">Revenue</h5>
+							<p id="tvEmptyRevenue" class="d-none text-center mb-0 pb-0">No data to display</p>
+							<div id="divRevenue" class="d-none col-12 text-center">
+								<canvas id="chartRevenue"></canvas>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-4">
+			<h3 class="text-start mt-4">Appointments</h3>
+			<div id="cardAppointments" class="row col-12 container ps-5" role="button">
+				<div class="row col-12 rounded bg-white p-4 justify-content-center">
+					<h5 class="text-start">This Month</h5>
+					<p id="tvEmptyAppointmentsThisMonth" class="d-none text-center mb-0 pb-0">No data to display</p>
+					<div id="divAppointmentsThisMonth" class="d-none col-12 text-center">
+						<canvas id="chartAppointmentsThisMonth"></canvas>
+					</div>
+				</div>
+				
+				<div class="row col-12 rounded bg-white p-4 justify-content-center">
+					<h5 class="text-start">All Time</h5>
+					<p id="tvEmptyAppointmentsAllTime" class="d-none text-center mb-0 pb-0">No data to display</p>
+					<div id="divAppointmentsAllTime" class="d-none col-12 text-center">
+						<canvas id="chartAppointmentsAllTime"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
